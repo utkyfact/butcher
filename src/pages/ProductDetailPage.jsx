@@ -14,13 +14,13 @@ const ProductDetailPage = () => {
     const [quantity, setQuantity] = useState(1);
     const [customQuantity, setCustomQuantity] = useState('');
     
-    const selectedProduct = products.find(p => p.id === id);
+    const selectedProduct = products.find(p => p.id === Number(id) || p.id.toString() === id);
   
     useEffect(() => {
       if (selectedProduct) {
         setSelectedProduct(selectedProduct);
       }
-    }, [id, products, setSelectedProduct]);
+    }, [id, products, setSelectedProduct, selectedProduct]);
   
     if (!selectedProduct) {
       return (
