@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { useAppDispatch } from '../store/hooks';
 import { addToCart } from '../store/features/cart/cartSlice';
@@ -8,14 +8,32 @@ import { formatPrice } from '../utils/helpers';
 
 const ProductDetailPage = () => {
     const navigate = useNavigate();
-    const { selectedProduct, setCurrentPage } = useApp();
+    const { id } = useParams();
+    const { products, setSelectedProduct } = useApp();
     const dispatch = useAppDispatch();
     const [quantity, setQuantity] = useState(1);
     const [customQuantity, setCustomQuantity] = useState('');
+    
+    const selectedProduct = products.find(p => p.id === id);
+  
+    useEffect(() => {
+      if (selectedProduct) {
+        setSelectedProduct(selectedProduct);
+      }
+    }, [id, products, setSelectedProduct]);
   
     if (!selectedProduct) {
-      navigate('/urunler');
-      return null;
+      return (
+        <div className="flex items-center justify-center min-h-screen">
+          <div className="text-center">
+            <span className="text-6xl mb-4 block">🔍</span>
+            <h2 className="text-2xl font-bold text-gray-800 mb-4">Ürün Bulunamadı</h2>
+            <button onClick={() => navigate('/urunler')} className="btn btn-primary">
+              Ürünlere Dön
+            </button>
+          </div>
+        </div>
+      );
     }
   
     const handleAddToCart = () => {
