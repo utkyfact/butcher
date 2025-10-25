@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { useAppDispatch } from '../store/hooks';
 import { addToCart } from '../store/features/cart/cartSlice';
@@ -6,6 +7,7 @@ import { openCartSidebar } from '../store/features/ui/uiSlice';
 import { formatPrice } from '../utils/helpers';
 
 const ProductDetailPage = () => {
+    const navigate = useNavigate();
     const { selectedProduct, setCurrentPage } = useApp();
     const dispatch = useAppDispatch();
     const [quantity, setQuantity] = useState(1);
