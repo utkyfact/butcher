@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
 import { closeCartSidebar, openCartSidebar } from '../../store/features/ui/uiSlice';
@@ -10,6 +10,26 @@ const CartSidebar = () => {
   const dispatch = useAppDispatch();
   const { cartSidebarOpen } = useAppSelector(state => state.ui);
   const { items, total, itemCount } = useAppSelector(state => state.cart);
+
+  // ESC tuşu ile kapatma
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === 'Escape' && cartSidebarOpen) {
+        dispatch(closeCartSidebar());
+      }
+    };
+
+    if (cartSidebarOpen) {
+      document.addEventListener('keydown', handleEscape);
+      // Scroll'u engelle
+      document.body.style.overflow = 'hidden';
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+      document.body.style.overflow = '';
+    };
+  }, [cartSidebarOpen, dispatch]);
 
   const handleGoToCart = () => {
     dispatch(closeCartSidebar());
@@ -33,7 +53,7 @@ const CartSidebar = () => {
       {/* Overlay */}
       {cartSidebarOpen && (
         <div 
-          className="fixed inset-0 bg-black bg-opacity-50 z-40"
+          className="fixed inset-0 bg-black bg-opacity-50 z-40 touch-manipulation"
           onClick={() => dispatch(closeCartSidebar())}
         />
       )}
@@ -44,15 +64,25 @@ const CartSidebar = () => {
       }`}>
         <div className="flex flex-col h-full">
           {/* Header */}
-          <div className="flex items-center justify-between p-4 border-b border-gray-200">
+          <div className="flex items-center justify-between p-4 border-b border-gray-200 bg-white sticky top-0 z-10">
             <h2 className="text-xl font-bold text-gray-800">
               Sepetim ({itemCount} ürün)
             </h2>
             <button
               onClick={() => dispatch(closeCartSidebar())}
-              className="btn btn-circle btn-sm btn-ghost"
+              className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 hover:text-gray-900 transition-colors active:bg-gray-300 touch-manipulation"
+              aria-label="Sepeti kapat"
             >
-              ✕
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                className="h-6 w-6" 
+                fill="none" 
+                viewBox="0 0 24 24" 
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
             </button>
           </div>
 

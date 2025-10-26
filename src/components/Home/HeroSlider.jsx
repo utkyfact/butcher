@@ -17,7 +17,7 @@ const HeroSlider = () => {
     }, []);
   
     return (
-      <div className="carousel w-full h-96 md:h-[500px] relative">
+      <div className="carousel w-full h-[450px] md:h-[600px] lg:h-[700px] relative">
         {slides.map((slide, index) => (
           <div
             key={index}

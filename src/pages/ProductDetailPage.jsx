@@ -61,24 +61,24 @@ const ProductDetailPage = () => {
     };
   
     return (
-      <div className="bg-gray-50">
-        <div className="container mx-auto px-4 py-6 lg:py-8">
+      <div className="bg-gray-50 min-h-screen">
+        <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-6 lg:py-8">
           {/* Breadcrumb */}
-              <div className="mb-6">
+              <div className="mb-4 sm:mb-6">
                 <button
                   onClick={() => navigate('/urunler')}
-                  className="btn btn-ghost text-gray-600 hover:text-red-600 transition-colors"
+                  className="btn btn-ghost btn-sm sm:btn-md text-gray-600 hover:text-red-600 transition-colors text-xs sm:text-sm lg:text-base"
                 >
                   ← Ürünlere Dön
                 </button>
               </div>
           
           {/* Main Content */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12">
             {/* Product Image */}
-            <div className="order-2 lg:order-1">
-              <div className="sticky top-6">
-                <div className="aspect-square lg:aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl bg-white">
+            <div className="order-1">
+              <div className="lg:sticky lg:top-6">
+                <div className="aspect-square lg:aspect-[4/3] rounded-xl lg:rounded-2xl overflow-hidden shadow-lg lg:shadow-2xl bg-white">
                   <img 
                     src={selectedProduct.image} 
                     alt={selectedProduct.name} 
@@ -87,8 +87,8 @@ const ProductDetailPage = () => {
                 </div>
                 
                 {/* Stock Status */}
-                <div className="mt-4 flex items-center justify-center">
-                  <div className={`badge badge-lg px-4 py-2 ${
+                <div className="mt-3 lg:mt-4 flex items-center justify-center">
+                  <div className={`badge badge-sm lg:badge-lg px-3 lg:px-4 py-1.5 lg:py-2 ${
                     selectedProduct.stock > 20 ? 'badge-success' : 
                     selectedProduct.stock > 0 ? 'badge-warning' : 'badge-error'
                   }`}>
@@ -102,39 +102,39 @@ const ProductDetailPage = () => {
             </div>
             
             {/* Product Info */}
-            <div className="order-1 lg:order-2">
-              <div className="bg-white rounded-2xl shadow-xl p-6 lg:p-8">
+            <div className="order-2">
+              <div className="bg-white rounded-xl lg:rounded-2xl shadow-lg lg:shadow-xl p-4 sm:p-6 lg:p-8">
                 {/* Product Title & Category */}
-                <div className="mb-6">
-                  <div className="badge badge-secondary badge-lg mb-4">
+                <div className="mb-4 lg:mb-6">
+                  <div className="badge badge-secondary badge-sm lg:badge-lg mb-3 lg:mb-4">
                     {selectedProduct.category}
                   </div>
-                  <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+                  <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 lg:mb-4">
                     {selectedProduct.name}
                   </h1>
-                  <p className="text-gray-700 text-lg leading-relaxed">
+                  <p className="text-gray-700 text-base sm:text-lg leading-relaxed">
                     {selectedProduct.description}
                   </p>
                 </div>
                 
                 {/* Price */}
-                <div className="bg-gradient-to-r from-red-50 to-orange-50 p-6 rounded-xl mb-8">
-                  <div className="text-4xl lg:text-5xl font-bold text-red-600 mb-2">
+                <div className="bg-gradient-to-r from-red-50 to-orange-50 p-4 sm:p-6 rounded-lg lg:rounded-xl mb-6 lg:mb-8">
+                  <div className="text-2xl sm:text-3xl lg:text-5xl font-bold text-red-600 mb-1 lg:mb-2">
                     {formatPrice(selectedProduct.price)}/{selectedProduct.unit}
                   </div>
-                  <p className="text-gray-600">Birim fiyat</p>
+                  <p className="text-sm sm:text-base text-gray-600">Birim fiyat</p>
                 </div>
     
                 {/* Quantity Selection */}
-                <div className="mb-8">
-                  <label className="label">
-                    <span className="label-text text-xl font-semibold text-gray-800">
+                <div className="mb-6 lg:mb-8">
+                  <label className="label px-0">
+                    <span className="label-text text-base sm:text-lg lg:text-xl font-semibold text-gray-800">
                       Miktar Seçin ({selectedProduct.unit})
                     </span>
                   </label>
                   
                   {/* Quick Quantity Buttons */}
-                  <div className="grid grid-cols-4 gap-2 mb-4">
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-4">
                     {[0.5, 1, 2, 5].map(amount => (
                       <button
                         key={amount}
@@ -142,7 +142,7 @@ const ProductDetailPage = () => {
                           setQuantity(amount);
                           setCustomQuantity('');
                         }}
-                        className={`btn ${quantity === amount ? 'btn-primary' : 'btn-outline'} btn-lg`}
+                        className={`btn ${quantity === amount ? 'btn-primary' : 'btn-outline'} btn-sm sm:btn-md lg:btn-lg text-xs sm:text-sm`}
                       >
                         {amount} {selectedProduct.unit}
                       </button>
@@ -160,32 +160,32 @@ const ProductDetailPage = () => {
                         placeholder={`Özel miktar (min: 0.5 ${selectedProduct.unit})`}
                         step="0.5"
                         min="0.5"
-                        className="input input-bordered w-full text-lg"
+                        className="input input-bordered w-full text-sm sm:text-base lg:text-lg"
                       />
                     </div>
                     <button 
                       onClick={handleCustomQuantitySubmit}
-                      className="btn btn-primary btn-lg px-6"
+                      className="btn btn-primary btn-sm sm:btn-md lg:btn-lg px-3 sm:px-4 lg:px-6"
                     >
                       ✓
                     </button>
                   </div>
                   
                   {/* Manual Quantity Controls */}
-                  <div className="flex items-center justify-center gap-4 mt-4">
+                  <div className="flex items-center justify-center gap-3 sm:gap-4 mt-4">
                     <button 
                       onClick={() => {
                         const newQty = Math.max(0.5, quantity - 0.5);
                         setQuantity(newQty);
                         setCustomQuantity('');
                       }}
-                      className="btn btn-circle btn-lg btn-outline"
+                      className="btn btn-circle btn-sm sm:btn-md lg:btn-lg btn-outline"
                     >
-                      <span className="text-2xl">-</span>
+                      <span className="text-lg sm:text-xl lg:text-2xl">-</span>
                     </button>
                     
-                    <div className="bg-gray-100 px-6 py-3 rounded-xl min-w-[120px] text-center">
-                      <div className="text-2xl font-bold text-gray-800">
+                    <div className="bg-gray-100 px-4 sm:px-6 py-2 sm:py-3 rounded-lg sm:rounded-xl min-w-[100px] sm:min-w-[120px] text-center">
+                      <div className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-800">
                         {quantity} {selectedProduct.unit}
                       </div>
                     </div>
@@ -196,15 +196,15 @@ const ProductDetailPage = () => {
                         setQuantity(newQty);
                         setCustomQuantity('');
                       }}
-                      className="btn btn-circle btn-lg btn-outline"
+                      className="btn btn-circle btn-sm sm:btn-md lg:btn-lg btn-outline"
                     >
-                      <span className="text-2xl">+</span>
+                      <span className="text-lg sm:text-xl lg:text-2xl">+</span>
                     </button>
                   </div>
                   
                   {/* Total Price Display */}
                   <div className="mt-4 text-center">
-                    <div className="text-2xl font-bold text-red-600">
+                    <div className="text-xl sm:text-2xl font-bold text-red-600">
                       Toplam: {formatPrice(selectedProduct.price * quantity)}
                     </div>
                   </div>
@@ -213,7 +213,7 @@ const ProductDetailPage = () => {
                 {/* Add to Cart Button */}
                 <button
                   onClick={handleAddToCart}
-                  className="btn btn-primary btn-lg w-full text-xl py-4 disabled:opacity-50"
+                  className="btn btn-primary btn-md sm:btn-lg w-full text-base sm:text-lg lg:text-xl py-3 sm:py-4 disabled:opacity-50"
                   disabled={selectedProduct.stock === 0}
                 >
                   {selectedProduct.stock === 0 ? 
@@ -223,8 +223,8 @@ const ProductDetailPage = () => {
                 </button>
                 
                 {/* Additional Info */}
-                <div className="mt-8 pt-6 border-t border-gray-200">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-gray-600">
+                <div className="mt-6 lg:mt-8 pt-4 lg:pt-6 border-t border-gray-200">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 text-xs sm:text-sm text-gray-600">
                     <div className="flex items-center gap-2">
                       <span className="text-green-600">✓</span>
                       <span>Taze ve kaliteli</span>
